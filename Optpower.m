@@ -1,4 +1,5 @@
 function [min,exitflag]=Optpower(B,x,Tmax,nodeLoad,nodeGeneration,PGmaxF)
+%ç›®æ ‡æ˜¯å‰Šå‡å°½é‡å°‘çš„è´Ÿè·
 s=1;
 A=adjacentMatrix(B);
 m=slackBranch(B,s);
@@ -19,21 +20,21 @@ end
 co=reciprocalOfXS.*(AS*inv(Y));
 % T=co*(nodeGeneration(2:size(nodeGeneration,1),1)-nodeLoadS);
 coT=-ones([size(x,2)-1,1]);
-c=ones([size(A,2)-1,1]);%Î´³ËcoÊ±Ï÷¼õ¸ººÉµÄÏµÊı
+c=ones([size(A,2)-1,1]);%æœªä¹˜coæ—¶å‰Šå‡è´Ÿè·çš„ç³»æ•°
 
-copSP=[];%·¢µç»úÇ°ÃæµÄÏµÊı
+copSP=[];%å‘ç”µæœºå‰é¢çš„ç³»æ•°
 for i =1:size(co,1)
     copSP=[copSP;co(i,:).*nodeGenerationS'];
 end
 
-coc=[];%±»Ï÷¼õ¸ººÉÇ°ÃæµÄÏµÊı
+coc=[];%è¢«å‰Šå‡è´Ÿè·å‰é¢çš„ç³»æ•°
 for i =1:size(co,1)
     coc=[coc;co(i,:).*c'];
 end
 
 Aeq=[diag(coT),coc,copSP
     zeros([1,size(coT,1)]),c',nodeGenerationS'];
-% ÏßÂ·³±Á÷Ô¼Êø(-T)+co*(Psp+C)=coPld
+% çº¿è·¯æ½®æµçº¦æŸ(-T)+co*(Psp+C)=coPld
 beq=[co*nodeLoadS
     sum(nodeLoadS)];
 % bopt=[Tmax',nodeLoadS',PGmax'];
